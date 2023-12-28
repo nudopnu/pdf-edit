@@ -13,13 +13,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppInitializerProvider } from './app-initializer.provider';
 import { ZorroModule } from './modules/zorro/zorro.module';
+import { DropzoneDirective } from './directives/dropzone.directive';
+import { SlotComponent } from './components/slot/slot.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditorComponent
+    EditorComponent,
+    DropzoneDirective,
+    SlotComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'pdf-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  constructor(private themeService: ThemeService) { }
+
+  onToggleDarkmode() {
+    this.themeService.toggleTheme();
+  }
+
+
   title = 'pdf-edit';
 }

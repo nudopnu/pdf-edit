@@ -1,8 +1,6 @@
-<nav>
-    <button nz-button nzType="default" nzShape="circle" (click)="onToggleDarkmode()">
-        <span nz-icon nzType="bg-colors" nzTheme="outline"></span>
-    </button>
-</nav>
 <main>
-    <canvas id="canvas"></canvas>
+    <pdf-slot (onFilesReceived)="onFilesReceived($event)"/>
+    <section id="workarea">
+        <canvas id="canvas"></canvas>
+    </section>
 </main>
