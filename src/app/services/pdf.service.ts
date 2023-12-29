@@ -46,8 +46,8 @@ export class PdfService {
     });
   }
 
-  async fromFile(file: File) {
-    const fileContent = await this.readFile(file);
-    return await pdfjsLib.getDocument(fileContent).promise;
+  async fromFile(file: File): Promise<PDFDocumentProxy> {
+    const arrayBuffer = await file.arrayBuffer();
+    return await pdfjsLib.getDocument(arrayBuffer).promise;
   }
 }

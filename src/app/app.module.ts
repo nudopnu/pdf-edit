@@ -15,6 +15,7 @@ import { AppInitializerProvider } from './app-initializer.provider';
 import { ZorroModule } from './modules/zorro/zorro.module';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { SlotComponent } from './components/slot/slot.component';
+import { PageviewComponent } from './components/pageview/pageview.component';
 
 registerLocaleData(en);
 
@@ -23,7 +24,8 @@ registerLocaleData(en);
     AppComponent,
     EditorComponent,
     DropzoneDirective,
-    SlotComponent
+    SlotComponent,
+    PageviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,19 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 0;
+}
+
 #slot {
-    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px dotted gray;
     border-radius: 10px;
     padding: 1rem;
+    width: 60px;
+    height: 60px;
     cursor: pointer;
 }
 

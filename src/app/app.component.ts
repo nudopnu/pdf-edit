@@ -14,6 +14,4 @@ export class AppComponent {
     this.themeService.toggleTheme();
   }
 
-
-  title = 'pdf-edit';
 }
