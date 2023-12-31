@@ -16,7 +16,7 @@ export class EditorComponent implements OnInit {
   ) { }
 
   @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
+  async onKeyDown(event: KeyboardEvent) {
     const { key } = event;
     switch (key) {
       case 'j':
@@ -44,6 +44,9 @@ export class EditorComponent implements OnInit {
         if (this.editorService.pages.length > 0) {
           this.moveToPage(this.editorService.currentPageIdx);
         }
+        break;
+      case 's':
+        await this.editorService.assemblePdf();
         break;
       default:
         break;

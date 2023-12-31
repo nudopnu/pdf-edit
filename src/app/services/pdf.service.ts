@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PDFDocument, PDFPage, StandardFonts, rgb } from 'pdf-lib';
-import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
 
@@ -10,7 +10,6 @@ declare const pdfjsLib: any;
 export class PdfService {
 
   proxyDocToLibDoc: Map<PDFDocumentProxy, PDFDocument> = new Map();
-  proxyPageToProxyDoc: Map<PDFPageProxy, PDFDocumentProxy> = new Map();
 
   constructor() {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.mjs';
@@ -36,6 +35,7 @@ export class PdfService {
 
     const pdfBytes = await libDoc.save();
     const proxyDoc: PDFDocumentProxy = await pdfjsLib.getDocument(pdfBytes).promise;
+    this.proxyDocToLibDoc.set(proxyDoc, libDoc);
     return proxyDoc;
   }
 

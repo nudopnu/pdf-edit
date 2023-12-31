@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
 import { PdfService } from './pdf.service';
+import { PDFDocument } from 'pdf-lib';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class EditorService {
 
   pages: PDFPageProxy[] = [];
   currentPageIdx = 0;
+  pageToDoc: Map<PDFPageProxy, PDFDocumentProxy> = new Map();
 
   constructor(private pdfService: PdfService) { }
 
@@ -81,7 +83,28 @@ export class EditorService {
     for (let idx = 0; idx < pdf.numPages; idx++) {
       const page = await pdf.getPage(idx + 1);
       this.pages.push(page);
+      this.pageToDoc.set(page, pdf);
     }
+  }
+
+  async assemblePdf() {
+    const pdf = await PDFDocument.create();
+    for (const proxyPage of this.pages) {
+      const proxyDoc = this.pageToDoc.get(proxyPage)!;
+      const doc = this.pdfService.proxyDocToLibDoc.get(proxyDoc)!;
+      const idx = proxyPage._pageIndex;
+      console.log(doc, idx);
+      
+      const [page] = await pdf.copyPages(doc, [idx]);
+      console.log(page);
+      await pdf.addPage(page);
+    }
+    const pdfBytes = await pdf.save();
+    const blob = new Blob([pdfBytes], {type: "application/pdf"});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "result.pdf";
+    link.click();
   }
 
 }
