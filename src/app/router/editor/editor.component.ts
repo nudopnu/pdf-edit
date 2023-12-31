@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { PDFPageProxy } from 'pdfjs-dist';
-import { PdfService } from '../../services/pdf.service';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
+import { EditorService } from '../../services/editor.service';
 
 @Component({
   selector: 'pdf-editor',
@@ -11,7 +10,7 @@ import { PageviewComponent } from '../../components/pageview/pageview.component'
 export class EditorComponent implements OnInit {
 
   @ViewChildren('fullpage') fullpageViewComponents!: QueryList<PageviewComponent>;
-  constructor(public pdfService: PdfService) { }
+  constructor(public editorService: EditorService) { }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
@@ -20,27 +19,27 @@ export class EditorComponent implements OnInit {
     switch (key) {
       case 'j':
         if (event.altKey) {
-          const { currentPageIdx } = this.pdfService;
-          this.pdfService.movePageDown(currentPageIdx);
+          const { currentPageIdx } = this.editorService;
+          this.editorService.movePageDown(currentPageIdx);
           this.selectAndMoveToPage(currentPageIdx + 1);
         } else {
-          this.pdfService.selectNextPage();
-          this.moveToPage(this.pdfService.currentPageIdx);
+          this.editorService.selectNextPage();
+          this.moveToPage(this.editorService.currentPageIdx);
         }
         break;
       case 'k':
         if (event.altKey) {
-          const { currentPageIdx } = this.pdfService;
-          this.pdfService.movePageUp(currentPageIdx);
+          const { currentPageIdx } = this.editorService;
+          this.editorService.movePageUp(currentPageIdx);
           this.selectAndMoveToPage(currentPageIdx - 1);
         } else {
-          this.pdfService.selectPreviousPage();
-          this.moveToPage(this.pdfService.currentPageIdx);
+          this.editorService.selectPreviousPage();
+          this.moveToPage(this.editorService.currentPageIdx);
         }
         break;
       case 'd':
-        this.pdfService.deleteCurrentPage();
-        this.moveToPage(this.pdfService.currentPageIdx);
+        this.editorService.deleteCurrentPage();
+        this.moveToPage(this.editorService.currentPageIdx);
         break;
       default:
         break;
@@ -48,8 +47,8 @@ export class EditorComponent implements OnInit {
   }
 
   selectAndMoveToPage(idx: number) {
-    if (idx < 0 || idx >= this.pdfService.pages.length) return;
-    this.pdfService.selectPage(idx);
+    if (idx < 0 || idx >= this.editorService.pages.length) return;
+    this.editorService.selectPage(idx);
     this.moveToPage(idx);
   }
 
@@ -61,13 +60,13 @@ export class EditorComponent implements OnInit {
   async onFilesReceived(files: Array<File>) {
     for (const file of files) {
       if (file.name.endsWith('pdf')) {
-        await this.pdfService.addPdfFromFile(file);
+        await this.editorService.addPdfFromFile(file);
       }
     }
   }
 
   async ngOnInit(): Promise<void> {
-    this.pdfService.setSampleFile();
+    this.editorService.setSampleFile();
     this.moveToPage(0);
   }
 

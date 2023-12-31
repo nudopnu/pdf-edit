@@ -7,7 +7,7 @@ declare const pdfjsLib: any;
 @Injectable({
   providedIn: 'root'
 })
-export class PdfService {
+export class EditorService {
 
   pages: PDFPageProxy[] = [];
   currentPageIdx = 0;
@@ -105,6 +105,7 @@ export class PdfService {
         color: rgb(0, 0.53, 0.71),
       });
     }
+
     const pdfBytes = await pdfDoc.save();
     const pdf: PDFDocumentProxy = await pdfjsLib.getDocument(pdfBytes).promise;
     return pdf;
@@ -112,6 +113,7 @@ export class PdfService {
 
   private async fromFile(file: File): Promise<PDFDocumentProxy> {
     const arrayBuffer = await file.arrayBuffer();
+    const pdf = PDFDocument.load(arrayBuffer);
     return await pdfjsLib.getDocument(arrayBuffer).promise;
   }
 
