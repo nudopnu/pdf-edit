@@ -18,18 +18,20 @@ export class PdfService {
     const pdfDoc = await PDFDocument.create()
     const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
 
-    const page = pdfDoc.addPage();
-    const { width, height } = page.getSize();
-    const fontSize = 30;
-    page.drawText('Creating PDFs in JavaScript is awesome!', {
-      x: 50,
-      y: height - 4 * fontSize,
-      size: fontSize,
-      font: timesRomanFont,
-      color: rgb(0, 0.53, 0.71),
-    });
+    for (let i = 0; i < 6; ++i) {
+      const pageNr = i;
+      const page = pdfDoc.addPage();
+      const { width, height } = page.getSize();
+      const fontSize = 30;
+      page.drawText(`Page ${pageNr}`, {
+        x: 50,
+        y: height - 4 * fontSize,
+        size: fontSize,
+        font: timesRomanFont,
+        color: rgb(0, 0.53, 0.71),
+      });
+    }
     const pdfBytes = await pdfDoc.save();
-
     const pdf: PDFDocumentProxy = await pdfjsLib.getDocument(pdfBytes).promise;
     return pdf;
   }
@@ -50,4 +52,5 @@ export class PdfService {
     const arrayBuffer = await file.arrayBuffer();
     return await pdfjsLib.getDocument(arrayBuffer).promise;
   }
+
 }

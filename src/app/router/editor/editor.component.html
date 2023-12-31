@@ -1,16 +1,16 @@
 <main>
     <aside id="preview">
         <div id="preview-placeholder">
-            @for (page of pages; track $index) {
+            @for (page of pages; track page) {
             <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"
                 [ngClass]="{'selected': currentPageIdx === $index}"
-                (onSelected)="onSelectPage($event, $index)"></pdf-pageview>
+                (onSelected)="onSelectPage($index)"></pdf-pageview>
             }
         </div>
         <pdf-slot (onFilesReceived)="onFilesReceived($event)" />
     </aside>
     <section id="workarea">
-        @for (page of pages; track $index) {
+        @for (page of pages; track page) {
         <pdf-pageview [page]="page" #fullpage />
         }
     </section>

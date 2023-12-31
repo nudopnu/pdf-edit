@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { PDFPageProxy } from 'pdfjs-dist';
 
 @Component({
@@ -30,8 +30,7 @@ export class PageviewComponent implements AfterViewInit {
 
     canvas.width = Math.floor(viewport.width * outputScale);
     canvas.height = Math.floor(viewport.height * outputScale);
-    canvas.style.width = "100%";//Math.floor(viewport.width) + "px";
-    // canvas.style.height = Math.floor(viewport.height) + "px";
+    canvas.style.width = "100%"
 
     const transform = outputScale !== 1
       ? [outputScale, 0, 0, outputScale, 0, 0]

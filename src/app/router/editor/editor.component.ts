@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PDFPageProxy } from 'pdfjs-dist';
 import { PdfService } from '../../services/pdf.service';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
@@ -16,12 +16,46 @@ export class EditorComponent implements OnInit {
 
   constructor(private pdfService: PdfService) { }
 
-  onSelectPage(pageViewComponent: PageviewComponent, idx: number) {
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    console.log(event);
+    const { key } = event;
+    switch (key) {
+      case 'j':
+        if (this.currentPageIdx < this.pages.length - 1) {
+          this.onSelectPage(this.currentPageIdx + 1);
+        }
+        break;
+      case 'k':
+        if (this.currentPageIdx > 0) {
+          this.onSelectPage(this.currentPageIdx - 1);
+        }
+        break;
+      case 'd':
+        if (this.pages.length > 0) {
+          this.onDeletePage(this.currentPageIdx);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  onSelectPage(idx: number) {
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
-    console.log(nativeElement);
-
     this.currentPageIdx = idx;
+    console.log(`Selecting page ${this.currentPageIdx}`, this.pages[idx]);
+  }
+
+  onDeletePage(idx: number) {
+    this.pages = [...this.pages.filter((_, i) => i !== idx)];
+    if (this.currentPageIdx >= this.pages.length) {
+      this.currentPageIdx -= 1;
+    }
+    if (this.pages.length > 0) {
+      this.onSelectPage(this.currentPageIdx);
+    }
   }
 
   async onFilesReceived(files: Array<File>) {
@@ -39,6 +73,10 @@ export class EditorComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const pdf = await this.pdfService.createSamplefile();
     const page = await pdf.getPage(1);
+    for (let i = 0; i < pdf.numPages; i++) {
+      const page = await pdf.getPage(i + 1);
+      this.pages.push(page);
+    }
   }
 
 }
