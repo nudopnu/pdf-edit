@@ -11,10 +11,7 @@ import { PageviewComponent } from '../../components/pageview/pageview.component'
 export class EditorComponent implements OnInit {
 
   @ViewChildren('fullpage') fullpageViewComponents!: QueryList<PageviewComponent>;
-  pages: PDFPageProxy[] = [];
-  currentPageIdx = 0;
-
-  constructor(private pdfService: PdfService) { }
+  constructor(public pdfService: PdfService) { }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
@@ -22,61 +19,36 @@ export class EditorComponent implements OnInit {
     const { key } = event;
     switch (key) {
       case 'j':
-        if (this.currentPageIdx < this.pages.length - 1) {
-          this.selectPage(this.currentPageIdx + 1);
-        }
+        this.pdfService.selectNextPage();
+        this.scrollToPage(this.pdfService.currentPageIdx);
         break;
       case 'k':
-        if (this.currentPageIdx > 0) {
-          this.selectPage(this.currentPageIdx - 1);
-        }
+        this.pdfService.selectPreviousPage();
+        this.scrollToPage(this.pdfService.currentPageIdx);
         break;
       case 'd':
-        if (this.pages.length > 0) {
-          this.deletePage(this.currentPageIdx);
-        }
+        this.pdfService.deleteCurrentPage();
         break;
       default:
         break;
     }
   }
 
-  selectPage(idx: number) {
+  scrollToPage(idx: number) {
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
-    this.currentPageIdx = idx;
-    console.log(`Selecting page ${this.currentPageIdx}`, this.pages[idx]);
-  }
-
-  deletePage(idx: number) {
-    this.pages = [...this.pages.filter((_, i) => i !== idx)];
-    if (this.currentPageIdx >= this.pages.length) {
-      this.currentPageIdx -= 1;
-    }
-    if (this.pages.length > 0) {
-      this.selectPage(this.currentPageIdx);
-    }
   }
 
   async onFilesReceived(files: Array<File>) {
-    const sampleFile = files[0];
-    if (sampleFile.name.endsWith('pdf')) {
-      const pdf = await this.pdfService.fromFile(sampleFile);
-      for (let i = 0; i < pdf.numPages; i++) {
-        const page = await pdf.getPage(i + 1);
-        this.pages.push(page);
+    for (const file of files) {
+      if (file.name.endsWith('pdf')) {
+        await this.pdfService.addPdfFromFile(file);
       }
     }
-    console.log(this.pages);
   }
 
   async ngOnInit(): Promise<void> {
-    const pdf = await this.pdfService.createSamplefile();
-    const page = await pdf.getPage(1);
-    for (let i = 0; i < pdf.numPages; i++) {
-      const page = await pdf.getPage(i + 1);
-      this.pages.push(page);
-    }
+    this.pdfService.setSampleFile();
   }
 
 }

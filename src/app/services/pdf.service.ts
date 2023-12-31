@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PDFDocumentProxy } from 'pdfjs-dist';
+import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-
 
 declare const pdfjsLib: any;
 
@@ -10,8 +9,61 @@ declare const pdfjsLib: any;
 })
 export class PdfService {
 
+  pages: PDFPageProxy[] = [];
+  currentPageIdx = 0;
+
   constructor() {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.mjs';
+  }
+
+  async setSampleFile() {
+    const pdf = await this.createSamplefile();
+    this.addPdf(pdf);
+  }
+
+  async addPdfFromFile(file: File, idx?: number) {
+    const pdf = await this.fromFile(file);
+    await this.addPdf(pdf, idx);
+  }
+
+  async addPdf(pdf: PDFDocumentProxy, idx?: number) {
+    idx = idx || this.currentPageIdx;
+    for (let idx = 0; idx < pdf.numPages; idx++) {
+      const page = await pdf.getPage(idx + 1);
+      this.pages.push(page);
+    }
+  }
+
+  deletePage(idx: number) {
+    if (this.pages.length > 0) {
+      this.pages = [...this.pages.filter((_, i) => i !== idx)];
+      if (this.currentPageIdx >= this.pages.length) {
+        this.currentPageIdx -= 1;
+      }
+      if (this.pages.length > 0) {
+        this.selectPage(this.currentPageIdx);
+      }
+    }
+  }
+
+  deleteCurrentPage() {
+    this.deletePage(this.currentPageIdx);
+  }
+
+  selectPreviousPage() {
+    if (this.currentPageIdx > 0) {
+      this.selectPage(this.currentPageIdx - 1);
+    }
+  }
+
+  selectNextPage() {
+    if (this.currentPageIdx < this.pages.length - 1) {
+      this.selectPage(this.currentPageIdx + 1);
+    }
+  }
+
+  selectPage(idx: number) {
+    this.currentPageIdx = idx;
   }
 
   async createSamplefile() {
@@ -36,19 +88,7 @@ export class PdfService {
     return pdf;
   }
 
-  readFile(file: File) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const bytes = new Uint8Array(fileReader.result as ArrayBuffer);
-        resolve(bytes);
-      }
-      fileReader.onerror = reject;
-      fileReader.readAsArrayBuffer(file);
-    });
-  }
-
-  async fromFile(file: File): Promise<PDFDocumentProxy> {
+  private async fromFile(file: File): Promise<PDFDocumentProxy> {
     const arrayBuffer = await file.arrayBuffer();
     return await pdfjsLib.getDocument(arrayBuffer).promise;
   }
