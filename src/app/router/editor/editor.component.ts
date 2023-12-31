@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
 import { EditorService } from '../../services/editor.service';
 
@@ -10,11 +10,13 @@ import { EditorService } from '../../services/editor.service';
 export class EditorComponent implements OnInit {
 
   @ViewChildren('fullpage') fullpageViewComponents!: QueryList<PageviewComponent>;
-  constructor(public editorService: EditorService) { }
+  constructor(
+    public editorService: EditorService,
+    public cdr: ChangeDetectorRef,
+  ) { }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
-    console.log(event);
     const { key } = event;
     switch (key) {
       case 'j':
@@ -55,6 +57,7 @@ export class EditorComponent implements OnInit {
   }
 
   moveToPage(idx: number) {
+    this.cdr.detectChanges();
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
   }
