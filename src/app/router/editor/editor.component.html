@@ -4,14 +4,14 @@
             @for (page of pdfService.pages; track page) {
             <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"
                 [ngClass]="{'selected': pdfService.currentPageIdx === $index}"
-                (onSelected)="pdfService.selectPage($index)"></pdf-pageview>
+                (onSelected)="selectAndMoveToPage($index)"></pdf-pageview>
             }
         </div>
         <pdf-slot (onFilesReceived)="onFilesReceived($event)" />
     </aside>
     <section id="workarea">
         @for (page of pdfService.pages; track page) {
-        <pdf-pageview [page]="page" #fullpage />
+        <pdf-pageview [page]="page" #fullpage (onSelected)="pdfService.selectPage($index)" />
         }
     </section>
 </main>

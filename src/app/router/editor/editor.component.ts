@@ -20,11 +20,11 @@ export class EditorComponent implements OnInit {
     switch (key) {
       case 'j':
         this.pdfService.selectNextPage();
-        this.scrollToPage(this.pdfService.currentPageIdx);
+        this.moveToPage(this.pdfService.currentPageIdx);
         break;
       case 'k':
         this.pdfService.selectPreviousPage();
-        this.scrollToPage(this.pdfService.currentPageIdx);
+        this.moveToPage(this.pdfService.currentPageIdx);
         break;
       case 'd':
         this.pdfService.deleteCurrentPage();
@@ -34,7 +34,12 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  scrollToPage(idx: number) {
+  selectAndMoveToPage(idx: number) {
+    this.pdfService.selectPage(idx);
+    this.moveToPage(idx);
+  }
+
+  moveToPage(idx: number) {
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
   }
