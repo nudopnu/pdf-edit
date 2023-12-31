@@ -12,7 +12,8 @@ main {
 
 #workarea {
     max-height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
+    flex: 1;
 }
 
 .page-preview {
@@ -26,12 +27,13 @@ aside#preview {
     display: flex;
     flex-direction: column;
     padding: 0 10px;
-    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
 }
 
 #preview-placeholder {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 #pagepreviews {

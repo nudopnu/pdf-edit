@@ -40,6 +40,7 @@ export class EditorComponent implements OnInit {
         break;
       case 'd':
         this.pdfService.deleteCurrentPage();
+        this.moveToPage(this.pdfService.currentPageIdx);
         break;
       default:
         break;
@@ -67,6 +68,7 @@ export class EditorComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.pdfService.setSampleFile();
+    this.moveToPage(0);
   }
 
 }
