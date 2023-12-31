@@ -4,7 +4,7 @@
             @for (page of pages; track page) {
             <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"
                 [ngClass]="{'selected': currentPageIdx === $index}"
-                (onSelected)="onSelectPage($index)"></pdf-pageview>
+                (onSelected)="selectPage($index)"></pdf-pageview>
             }
         </div>
         <pdf-slot (onFilesReceived)="onFilesReceived($event)" />

@@ -23,17 +23,17 @@ export class EditorComponent implements OnInit {
     switch (key) {
       case 'j':
         if (this.currentPageIdx < this.pages.length - 1) {
-          this.onSelectPage(this.currentPageIdx + 1);
+          this.selectPage(this.currentPageIdx + 1);
         }
         break;
       case 'k':
         if (this.currentPageIdx > 0) {
-          this.onSelectPage(this.currentPageIdx - 1);
+          this.selectPage(this.currentPageIdx - 1);
         }
         break;
       case 'd':
         if (this.pages.length > 0) {
-          this.onDeletePage(this.currentPageIdx);
+          this.deletePage(this.currentPageIdx);
         }
         break;
       default:
@@ -41,20 +41,20 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  onSelectPage(idx: number) {
+  selectPage(idx: number) {
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
     this.currentPageIdx = idx;
     console.log(`Selecting page ${this.currentPageIdx}`, this.pages[idx]);
   }
 
-  onDeletePage(idx: number) {
+  deletePage(idx: number) {
     this.pages = [...this.pages.filter((_, i) => i !== idx)];
     if (this.currentPageIdx >= this.pages.length) {
       this.currentPageIdx -= 1;
     }
     if (this.pages.length > 0) {
-      this.onSelectPage(this.currentPageIdx);
+      this.selectPage(this.currentPageIdx);
     }
   }
 
