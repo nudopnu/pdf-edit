@@ -1,1 +1,1 @@
-<canvas #canvas (click)="onSelected.emit(this)"></canvas>
+<canvas #canvas (click)="onSelected.emit(this)" [ngStyle]="{'cursor': scale === 1 ? 'default' : 'pointer'}"></canvas>
