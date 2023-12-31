@@ -93,10 +93,7 @@ export class EditorService {
       const proxyDoc = this.pageToDoc.get(proxyPage)!;
       const doc = this.pdfService.proxyDocToLibDoc.get(proxyDoc)!;
       const idx = proxyPage._pageIndex;
-      console.log(doc, idx);
-      
       const [page] = await pdf.copyPages(doc, [idx]);
-      console.log(page);
       await pdf.addPage(page);
     }
     const pdfBytes = await pdf.save();
