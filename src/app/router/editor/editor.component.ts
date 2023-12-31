@@ -39,7 +39,9 @@ export class EditorComponent implements OnInit {
         break;
       case 'd':
         this.editorService.deleteCurrentPage();
-        this.moveToPage(this.editorService.currentPageIdx);
+        if (this.editorService.pages.length > 0) {
+          this.moveToPage(this.editorService.currentPageIdx);
+        }
         break;
       default:
         break;
@@ -66,7 +68,7 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.editorService.setSampleFile();
+    await this.editorService.setSampleFile();
     this.moveToPage(0);
   }
 
