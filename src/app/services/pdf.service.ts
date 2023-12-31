@@ -46,10 +46,6 @@ export class PdfService {
     }
   }
 
-  deleteCurrentPage() {
-    this.deletePage(this.currentPageIdx);
-  }
-
   selectPreviousPage() {
     if (this.currentPageIdx > 0) {
       this.selectPage(this.currentPageIdx - 1);
@@ -64,6 +60,32 @@ export class PdfService {
 
   selectPage(idx: number) {
     this.currentPageIdx = idx;
+  }
+
+  movePageUp(idx: number) {
+    if (this.currentPageIdx > 0) {
+      this.pages = [
+        ...this.pages.slice(0, idx - 1),
+        this.pages[idx],
+        this.pages[idx - 1],
+        ...this.pages.slice(idx + 1),
+      ];
+    }
+  }
+
+  movePageDown(idx: number) {
+    if (this.currentPageIdx < this.pages.length - 1) {
+      this.pages = [
+        ...this.pages.slice(0, idx),
+        this.pages[idx + 1],
+        this.pages[idx],
+        ...this.pages.slice(idx + 2),
+      ];
+    }
+  }
+
+  deleteCurrentPage() {
+    this.deletePage(this.currentPageIdx);
   }
 
   async createSamplefile() {

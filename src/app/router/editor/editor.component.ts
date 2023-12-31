@@ -19,12 +19,24 @@ export class EditorComponent implements OnInit {
     const { key } = event;
     switch (key) {
       case 'j':
-        this.pdfService.selectNextPage();
-        this.moveToPage(this.pdfService.currentPageIdx);
+        if (event.altKey) {
+          const { currentPageIdx } = this.pdfService;
+          this.pdfService.movePageDown(currentPageIdx);
+          this.selectAndMoveToPage(currentPageIdx + 1);
+        } else {
+          this.pdfService.selectNextPage();
+          this.moveToPage(this.pdfService.currentPageIdx);
+        }
         break;
       case 'k':
-        this.pdfService.selectPreviousPage();
-        this.moveToPage(this.pdfService.currentPageIdx);
+        if (event.altKey) {
+          const { currentPageIdx } = this.pdfService;
+          this.pdfService.movePageUp(currentPageIdx);
+          this.selectAndMoveToPage(currentPageIdx - 1);
+        } else {
+          this.pdfService.selectPreviousPage();
+          this.moveToPage(this.pdfService.currentPageIdx);
+        }
         break;
       case 'd':
         this.pdfService.deleteCurrentPage();
@@ -35,6 +47,7 @@ export class EditorComponent implements OnInit {
   }
 
   selectAndMoveToPage(idx: number) {
+    if (idx < 0 || idx >= this.pdfService.pages.length) return;
     this.pdfService.selectPage(idx);
     this.moveToPage(idx);
   }
