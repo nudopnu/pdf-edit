@@ -69,6 +69,8 @@ export class EditorComponent implements OnInit {
     for (const file of files) {
       if (file.name.endsWith('pdf')) {
         await this.editorService.addPdfFromFile(file);
+      } else if (file.name.endsWith('png')) {
+        await this.editorService.addImageFromFile(file);
       }
     }
   }

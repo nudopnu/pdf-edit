@@ -78,6 +78,11 @@ export class EditorService {
     await this.addPdf(pdf, idx);
   }
 
+  async addImageFromFile(file: File, idx?: number) {
+    const pdf = await this.pdfService.fromImageFile(file);
+    await this.addPdf(pdf, idx);
+  }
+
   async addPdf(pdf: PDFDocumentProxy, idx?: number) {
     idx = idx || this.currentPageIdx;
     for (let idx = 0; idx < pdf.numPages; idx++) {
@@ -97,7 +102,7 @@ export class EditorService {
       await pdf.addPage(page);
     }
     const pdfBytes = await pdf.save();
-    const blob = new Blob([pdfBytes], {type: "application/pdf"});
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.download = "result.pdf";

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { PDFDocument, StandardFonts, arrayAsString, rgb } from 'pdf-lib';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
@@ -43,6 +43,23 @@ export class PdfService {
     const arrayBuffer = await file.arrayBuffer();
     const libDoc = await PDFDocument.load(arrayBuffer);
     const proxyDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+    this.proxyDocToLibDoc.set(proxyDoc, libDoc);
+    return proxyDoc;
+  }
+
+  async fromImageFile(file: File) {
+    const arrayBuffer = await file.arrayBuffer();
+    const libDoc = await PDFDocument.create();
+    const libPage = libDoc.addPage();
+    let image;
+    if (file.name.endsWith('png')) {
+      image = await libDoc.embedPng(arrayBuffer);
+    } else {
+      image = await libDoc.embedJpg(arrayBuffer);
+    }
+    libPage.drawImage(image);
+    const pdfBytes = await libDoc.save();
+    const proxyDoc: PDFDocumentProxy = await pdfjsLib.getDocument(pdfBytes).promise;
     this.proxyDocToLibDoc.set(proxyDoc, libDoc);
     return proxyDoc;
   }
