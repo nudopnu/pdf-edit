@@ -2,16 +2,29 @@
     <aside id="preview">
         <div id="preview-placeholder">
             @for (page of editorService.pages; track page) {
-            <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"
-                [ngClass]="{'selected': editorService.currentPageIdx === $index}"
-                (onSelected)="selectAndMoveToPage($index)"></pdf-pageview>
+            <div class="preview">
+                <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"
+                    [ngClass]="{'selected': editorService.currentPageIdx === $index}"
+                    (onSelected)="selectAndMoveToPage($index)"></pdf-pageview>
+            </div>
             }
         </div>
         <pdf-slot (onFilesReceived)="onFilesReceived($event)" />
     </aside>
     <section id="workarea">
         @for (page of editorService.pages; track page) {
-        <pdf-pageview [page]="page" #fullpage (onSelected)="editorService.selectPage($index)" />
+        <pdf-mobile-overlay (onMovePageDown)="moveCurrentPageDown()" (onMovePageUp)="moveCurrentPageUp()"
+            (onDeletePage)="deleteCurrentPage()">
+            <pdf-pageview class="fullpage" [page]="page" #fullpage (onSelected)="editorService.selectPage($index)"
+                touchable></pdf-pageview>
+        </pdf-mobile-overlay>
         }
     </section>
+    @if (editorService.pages.length > 0) {
+    <div id="workarea-overlay">
+        <button nz-button nzType="primary" nzSize="large" nzShape="circle" touchable (click)="editorService.assemblePdf()">
+            <span nz-icon nzType="download"></span>
+        </button>
+    </div>
+    }
 </main>

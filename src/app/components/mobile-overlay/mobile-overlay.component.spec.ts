@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import PageviewComponent from './pageview.component';
+import { MobileOverlayComponent } from './mobile-overlay.component';
 
-describe('PageviewComponent', () => {
-  let component: PageviewComponent;
-  let fixture: ComponentFixture<PageviewComponent>;
+describe('MobileOverlayComponent', () => {
+  let component: MobileOverlayComponent;
+  let fixture: ComponentFixture<MobileOverlayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageviewComponent]
+      declarations: [MobileOverlayComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PageviewComponent);
+    fixture = TestBed.createComponent(MobileOverlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

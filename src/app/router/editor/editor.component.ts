@@ -21,9 +21,7 @@ export class EditorComponent implements OnInit {
     switch (key) {
       case 'j':
         if (event.altKey) {
-          const { currentPageIdx } = this.editorService;
-          this.editorService.movePageDown(currentPageIdx);
-          this.selectAndMoveToPage(currentPageIdx + 1);
+          this.moveCurrentPageDown();
         } else {
           this.editorService.selectNextPage();
           this.moveToPage(this.editorService.currentPageIdx);
@@ -31,19 +29,14 @@ export class EditorComponent implements OnInit {
         break;
       case 'k':
         if (event.altKey) {
-          const { currentPageIdx } = this.editorService;
-          this.editorService.movePageUp(currentPageIdx);
-          this.selectAndMoveToPage(currentPageIdx - 1);
+          this.moveCurrentPageUp();
         } else {
           this.editorService.selectPreviousPage();
           this.moveToPage(this.editorService.currentPageIdx);
         }
         break;
       case 'd':
-        this.editorService.deleteCurrentPage();
-        if (this.editorService.pages.length > 0) {
-          this.moveToPage(this.editorService.currentPageIdx);
-        }
+        this.deleteCurrentPage();
         break;
       case 's':
         await this.editorService.assemblePdf();
@@ -51,6 +44,25 @@ export class EditorComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  deleteCurrentPage() {
+    this.editorService.deleteCurrentPage();
+    if (this.editorService.pages.length > 0) {
+      this.moveToPage(this.editorService.currentPageIdx);
+    }
+  }
+
+  moveCurrentPageUp() {
+    const { currentPageIdx } = this.editorService;
+    this.editorService.movePageUp(currentPageIdx);
+    this.selectAndMoveToPage(currentPageIdx - 1);
+  }
+
+  moveCurrentPageDown() {
+    const { currentPageIdx } = this.editorService;
+    this.editorService.movePageDown(currentPageIdx);
+    this.selectAndMoveToPage(currentPageIdx + 1);
   }
 
   selectAndMoveToPage(idx: number) {
@@ -76,8 +88,8 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.editorService.setSampleFile();
-    this.moveToPage(0);
+    // await this.editorService.setSampleFile();
+    // this.moveToPage(0);
   }
 
 }

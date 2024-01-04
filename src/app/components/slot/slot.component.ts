@@ -19,6 +19,10 @@ export class SlotComponent {
     }
   }
 
+  onClick() {
+    this.inputElementRef.nativeElement.value = null;
+  }
+
   @HostListener('window:keydown', ['$event'])
   onOpenFileDialog(event: KeyboardEvent) {
     if (event.key === 'o') {

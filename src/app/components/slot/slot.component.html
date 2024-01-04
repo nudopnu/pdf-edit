@@ -1,4 +1,4 @@
 <div id="slot" (click)="input.click()" tabindex="0">
     <span nz-icon nzType="plus" nzTheme="outline"></span>
-    <input #input type="file" style="display: none;" (change)="onFileInputChange(input)">
+    <input #input type="file" style="display: none;" (change)="onFileInputChange(input)" (click)="onClick()">
 </div>

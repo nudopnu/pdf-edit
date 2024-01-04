@@ -16,6 +16,8 @@ import { ZorroModule } from './modules/zorro/zorro.module';
 import { DropzoneDirective } from './directives/dropzone.directive';
 import { SlotComponent } from './components/slot/slot.component';
 import { PageviewComponent } from './components/pageview/pageview.component';
+import { TouchDirective } from './directives/touch.directive';
+import { MobileOverlayComponent } from './components/mobile-overlay/mobile-overlay.component';
 
 registerLocaleData(en);
 
@@ -24,8 +26,10 @@ registerLocaleData(en);
     AppComponent,
     EditorComponent,
     DropzoneDirective,
+    TouchDirective,
     SlotComponent,
     PageviewComponent,
+    MobileOverlayComponent,
   ],
   imports: [
     BrowserModule,
