@@ -11,6 +11,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Adding images (`png` and `jpeg`)
 - Deleting and re-ordering pages
 
+## Keyboard shortcuts
+
+| Key binding                                                    | Effect                                              |
+|----------------------------------------------------------------|-----------------------------------------------------|
+| <kbd>k</kbd>, <kbd>j</kbd>                                     | Select next or previous page                        |
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>j</kbd> | Move selected page up or down                       |
+| <kbd>d</kbd>                                                   | Delete selected page                                |
+| <kbd>r</kbd>, <kbd>l</kbd>                                     | Rotate selected page clock-wise, counter clock-wise |
+| <kbd>s</kbd>                                                   | Save pdf                                            |
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
