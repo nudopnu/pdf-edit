@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
 import { EditorService } from '../../services/editor.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'pdf-editor',
@@ -13,6 +14,7 @@ export class EditorComponent implements OnInit {
   constructor(
     public editorService: EditorService,
     public cdr: ChangeDetectorRef,
+    private messageService: NzMessageService,
   ) { }
 
   @HostListener('window:keydown', ['$event'])
@@ -49,6 +51,19 @@ export class EditorComponent implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+  async onFilesReceived(files: Array<File>) {
+    for (const file of files) {
+      const filename = file.name;
+      if (filename.endsWith('pdf')) {
+        await this.editorService.addPdfFromFile(file);
+      } else if (filename.endsWith('png') || filename.endsWith('jpg') || filename.endsWith('jpeg')) {
+        await this.editorService.addImageFromFile(file);
+      } else {
+        this.messageService.error(`Filetype ".${file.name.split('.').at(-1)} "not supported!`);
+      }
     }
   }
 
@@ -89,16 +104,6 @@ export class EditorComponent implements OnInit {
     this.cdr.detectChanges();
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
-  }
-
-  async onFilesReceived(files: Array<File>) {
-    for (const file of files) {
-      if (file.name.endsWith('pdf')) {
-        await this.editorService.addPdfFromFile(file);
-      } else if (file.name.endsWith('png')) {
-        await this.editorService.addImageFromFile(file);
-      }
-    }
   }
 
   async ngOnInit(): Promise<void> {
