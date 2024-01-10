@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { ALLOWED_FILE_TYPES } from '../../utils/file-utils';
 
 @Component({
   selector: 'pdf-slot',
@@ -12,6 +13,8 @@ export class SlotComponent {
 
   @ViewChild('input')
   inputElementRef!: ElementRef;
+
+  fileTypes = ALLOWED_FILE_TYPES;
 
   onFileInputChange(inputElement: HTMLInputElement) {
     if (inputElement.files) {

@@ -46,9 +46,9 @@ export class MobileOverlayComponent {
     });
   }
 
-  onClick(event: MouseEvent | TouchEvent, emitter: EventEmitter<any>) {
+  onClick(event: MouseEvent | TouchEvent, emitter: EventEmitter<any>, ...params: any) {
     this.skipNextCheck = true;
-    emitter.emit();
+    emitter.emit(...params);
   }
 
 }

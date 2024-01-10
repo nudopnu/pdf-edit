@@ -10,3 +10,12 @@ export function readFile(file: File) {
     });
 }
 
+export const ALLOWED_IMAGE_TYPES = [
+    "image/png",
+    "image/jpeg",
+];
+
+export const ALLOWED_FILE_TYPES = [
+    "application/pdf",
+    ...ALLOWED_IMAGE_TYPES,
+];

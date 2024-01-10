@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
 import { EditorService } from '../../services/editor.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ALLOWED_IMAGE_TYPES } from '../../utils/file-utils';
 
 @Component({
   selector: 'pdf-editor',
@@ -13,6 +15,7 @@ export class EditorComponent implements OnInit {
   constructor(
     public editorService: EditorService,
     public cdr: ChangeDetectorRef,
+    private messageService: NzMessageService,
   ) { }
 
   @HostListener('window:keydown', ['$event'])
@@ -35,6 +38,12 @@ export class EditorComponent implements OnInit {
           this.moveToPage(this.editorService.currentPageIdx);
         }
         break;
+      case 'l':
+        this.rotateCurrentPage();
+        break;
+      case 'r':
+        this.rotateCurrentPage(false);
+        break;
       case 'd':
         this.deleteCurrentPage();
         break;
@@ -44,6 +53,26 @@ export class EditorComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  async onFilesReceived(files: Array<File>) {
+    for (const file of files) {
+      if (file.type === 'application/pdf') {
+        await this.editorService.addPdfFromFile(file);
+      } else if (ALLOWED_IMAGE_TYPES.includes(file.type)) {
+        await this.editorService.addImageFromFile(file);
+      } else {
+        this.messageService.error(`Filetype ".${file.name.split('.').at(-1)} "not supported!`);
+      }
+    }
+  }
+
+  rotateCurrentPage(clockWise = true) {
+    const { currentPageIdx } = this.editorService;
+    const newAngle = this.editorService.rotatePage(currentPageIdx, clockWise);
+    const nativeElement = this.fullpageViewComponents.get(currentPageIdx)?.elementRef.nativeElement as HTMLElement;
+    nativeElement.style.rotate = `${newAngle}deg`;
+    console.log(nativeElement);
   }
 
   deleteCurrentPage() {
@@ -75,16 +104,6 @@ export class EditorComponent implements OnInit {
     this.cdr.detectChanges();
     const nativeElement = this.fullpageViewComponents.get(idx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.scrollIntoView();
-  }
-
-  async onFilesReceived(files: Array<File>) {
-    for (const file of files) {
-      if (file.name.endsWith('pdf')) {
-        await this.editorService.addPdfFromFile(file);
-      } else if (file.name.endsWith('png')) {
-        await this.editorService.addImageFromFile(file);
-      }
-    }
   }
 
   async ngOnInit(): Promise<void> {

@@ -6,6 +6,7 @@
 }
 
 .overlay {
+    z-index: 1;
     position: absolute;
     top: 0;
     background-color: #0007;

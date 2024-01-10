@@ -14,7 +14,7 @@
     <section id="workarea">
         @for (page of editorService.pages; track page) {
         <pdf-mobile-overlay (onMovePageDown)="moveCurrentPageDown()" (onMovePageUp)="moveCurrentPageUp()"
-            (onDeletePage)="deleteCurrentPage()">
+            (onDeletePage)="deleteCurrentPage()" (onRotatePage)="rotateCurrentPage()">
             <pdf-pageview class="fullpage" [page]="page" #fullpage (onSelected)="editorService.selectPage($index)"
                 touchable></pdf-pageview>
         </pdf-mobile-overlay>
