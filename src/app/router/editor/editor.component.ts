@@ -35,6 +35,12 @@ export class EditorComponent implements OnInit {
           this.moveToPage(this.editorService.currentPageIdx);
         }
         break;
+      case 'l':
+        this.rotateCurrentPage();
+        break;
+      case 'r':
+        this.rotateCurrentPage(false);
+        break;
       case 'd':
         this.deleteCurrentPage();
         break;
@@ -44,6 +50,14 @@ export class EditorComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  rotateCurrentPage(clockWise = true) {
+    const { currentPageIdx } = this.editorService;
+    const newAngle = this.editorService.rotatePage(currentPageIdx, clockWise);
+    const nativeElement = this.fullpageViewComponents.get(currentPageIdx)?.elementRef.nativeElement as HTMLElement;
+    nativeElement.style.rotate = `${newAngle}deg`;
+    console.log(nativeElement);
   }
 
   deleteCurrentPage() {
@@ -88,8 +102,8 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    // await this.editorService.setSampleFile();
-    // this.moveToPage(0);
+    await this.editorService.setSampleFile();
+    this.moveToPage(0);
   }
 
 }

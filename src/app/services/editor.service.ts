@@ -68,6 +68,15 @@ export class EditorService {
     }
   }
 
+  rotatePage(idx: number, clockWise = true) {
+    const proxyPage = this.pages[idx];
+    const page = this.proxyPageToPage(proxyPage);
+    const { angle, type } = page.getRotation();
+    const newAngle = clockWise ? angle + 90 : angle - 90;
+    page.setRotation({ type, angle: newAngle });
+    return newAngle;
+  }
+
   async setSampleFile() {
     const pdf = await this.pdfService.createSample();
     await this.addPdf(pdf);
@@ -90,6 +99,12 @@ export class EditorService {
       this.pages.push(page);
       this.pageToDoc.set(page, pdf);
     }
+  }
+
+  proxyPageToPage(proxyPage: PDFPageProxy, copy = false) {
+    const proxyDoc = this.pageToDoc.get(proxyPage)!;
+    const doc = this.pdfService.proxyDocToLibDoc.get(proxyDoc)!;
+    return doc.getPage(proxyPage._pageIndex);
   }
 
   async assemblePdf() {
