@@ -57,9 +57,6 @@ export class EditorComponent implements OnInit {
 
   async onFilesReceived(files: Array<File>) {
     for (const file of files) {
-      const filename = file.name;
-      console.log(file.type);
-      
       if (file.type === 'application/pdf') {
         await this.editorService.addPdfFromFile(file);
       } else if (ALLOWED_IMAGE_TYPES.includes(file.type)) {
@@ -110,8 +107,8 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.editorService.setSampleFile();
-    this.moveToPage(0);
+    // await this.editorService.setSampleFile();
+    // this.moveToPage(0);
   }
 
 }
