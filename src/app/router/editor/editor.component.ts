@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChil
 import { PageviewComponent } from '../../components/pageview/pageview.component';
 import { EditorService } from '../../services/editor.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ALLOWED_IMAGE_TYPES } from '../../utils/file-utils';
 
 @Component({
   selector: 'pdf-editor',
@@ -57,9 +58,11 @@ export class EditorComponent implements OnInit {
   async onFilesReceived(files: Array<File>) {
     for (const file of files) {
       const filename = file.name;
-      if (filename.endsWith('pdf')) {
+      console.log(file.type);
+      
+      if (file.type === 'application/pdf') {
         await this.editorService.addPdfFromFile(file);
-      } else if (filename.endsWith('png') || filename.endsWith('jpg') || filename.endsWith('jpeg')) {
+      } else if (ALLOWED_IMAGE_TYPES.includes(file.type)) {
         await this.editorService.addImageFromFile(file);
       } else {
         this.messageService.error(`Filetype ".${file.name.split('.').at(-1)} "not supported!`);
