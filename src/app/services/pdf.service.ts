@@ -41,7 +41,7 @@ export class PdfService {
 
   async fromPdfFile(file: File): Promise<PDFDocumentProxy> {
     const arrayBuffer = await file.arrayBuffer();
-    const libDoc = await PDFDocument.load(arrayBuffer);
+    const libDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     const proxyDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
     this.proxyDocToLibDoc.set(proxyDoc, libDoc);
     return proxyDoc;

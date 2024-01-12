@@ -1,6 +1,9 @@
-<nav>
-    <button nz-button nzType="default" nzShape="circle" (click)="onToggleDarkmode()">
-        <span nz-icon nzType="bg-colors" nzTheme="outline"></span>
-    </button>
-</nav>
+<header>
+    <nav>
+        <button nz-button nzType="default" nzShape="circle" (click)="onToggleDarkmode()" nzSize="small">
+            <span nz-icon nzType="bg-colors" nzTheme="outline"></span>
+        </button>
+    </nav>
+    <nz-divider></nz-divider>
+</header>
 <router-outlet></router-outlet>

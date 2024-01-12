@@ -84,7 +84,7 @@ export class EditorService {
 
   async addPdfFromFile(file: File, idx?: number) {
     const pdf = await this.pdfService.fromPdfFile(file);
-    await this.addPdf(pdf, idx);
+    return await this.addPdf(pdf, idx);
   }
 
   async addImageFromFile(file: File, idx?: number) {
@@ -99,6 +99,7 @@ export class EditorService {
       this.pages.push(page);
       this.pageToDoc.set(page, pdf);
     }
+    return pdf.numPages;
   }
 
   proxyPageToPage(proxyPage: PDFPageProxy, copy = false) {

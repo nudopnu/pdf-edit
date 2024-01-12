@@ -3,7 +3,10 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-import { UserOutline, BgColorsOutline, PlusOutline, RotateRightOutline, SwapOutline, FileSyncOutline, SyncOutline, DeleteOutline, DownOutline, CaretUpOutline, DownloadOutline } from '@ant-design/icons-angular/icons';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { UserOutline, BgColorsOutline, PlusOutline, RotateRightOutline, SwapOutline, FileSyncOutline, SyncOutline, DeleteOutline, DownOutline, CaretUpOutline, DownloadOutline, InboxOutline } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
     UserOutline,
@@ -17,6 +20,7 @@ const icons: IconDefinition[] = [
     DownOutline,
     CaretUpOutline,
     DownloadOutline,
+    InboxOutline,
 ];
 
 @NgModule({
@@ -27,6 +31,9 @@ const icons: IconDefinition[] = [
         NzButtonModule,
         NzIconModule,
         NzMessageModule,
+        NzUploadModule,
+        NzSpinModule,
+        NzDividerModule,
     ]
 })
 export class ZorroModule { }
