@@ -51,13 +51,15 @@ export class PdfService {
     const arrayBuffer = await file.arrayBuffer();
     const libDoc = await PDFDocument.create();
     const libPage = libDoc.addPage();
+    const targetWidth = libPage.getWidth();
+    const targetHeight = libPage.getHeight();
     let image;
     if (file.name.endsWith('png')) {
       image = await libDoc.embedPng(arrayBuffer);
     } else {
       image = await libDoc.embedJpg(arrayBuffer);
     }
-    libPage.drawImage(image);
+    libPage.drawImage(image, { width: targetWidth, height: targetHeight });
     const pdfBytes = await libDoc.save();
     const proxyDoc: PDFDocumentProxy = await pdfjsLib.getDocument(pdfBytes).promise;
     this.proxyDocToLibDoc.set(proxyDoc, libDoc);
