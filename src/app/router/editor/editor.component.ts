@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadChangeParam } from 'ng-zorro-antd/upload';
 import { PageviewComponent } from '../../components/pageview/pageview.component';
 import { EditorService } from '../../services/editor.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { ALLOWED_FILE_TYPES, ALLOWED_IMAGE_TYPES } from '../../utils/file-utils';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'pdf-editor',
@@ -26,6 +26,7 @@ export class EditorComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   async onKeyDown(event: KeyboardEvent) {
+    if (this.editorService.isTitleEditing) return;
     const { key } = event;
     switch (key) {
       case 'j':

@@ -18,6 +18,7 @@ import { SlotComponent } from './components/slot/slot.component';
 import { PageviewComponent } from './components/pageview/pageview.component';
 import { TouchDirective } from './directives/touch.directive';
 import { MobileOverlayComponent } from './components/mobile-overlay/mobile-overlay.component';
+import { SubmitOnEnterDirective } from './directives/submit-on-enter.directive';
 
 registerLocaleData(en);
 
@@ -30,6 +31,7 @@ registerLocaleData(en);
     SlotComponent,
     PageviewComponent,
     MobileOverlayComponent,
+    SubmitOnEnterDirective,
   ],
   imports: [
     BrowserModule,

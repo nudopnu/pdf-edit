@@ -10,6 +10,8 @@ export class EditorService {
 
   pages: PDFPageProxy[] = [];
   currentPageIdx = 0;
+  filename: string | undefined;
+  isTitleEditing = false;
   pageToDoc: Map<PDFPageProxy, PDFDocumentProxy> = new Map();
 
   constructor(private pdfService: PdfService) { }
@@ -57,14 +59,15 @@ export class EditorService {
   }
 
   deletePage(idx: number) {
+    if (this.pages.length !== 0) return;
+    this.pages = [...this.pages.filter((_, i) => i !== idx)];
+    if (this.currentPageIdx >= this.pages.length) {
+      this.currentPageIdx -= 1;
+    }
     if (this.pages.length > 0) {
-      this.pages = [...this.pages.filter((_, i) => i !== idx)];
-      if (this.currentPageIdx >= this.pages.length) {
-        this.currentPageIdx -= 1;
-      }
-      if (this.pages.length > 0) {
-        this.selectPage(this.currentPageIdx);
-      }
+      this.selectPage(this.currentPageIdx);
+    } else {
+      this.filename = undefined;
     }
   }
 
@@ -79,16 +82,23 @@ export class EditorService {
 
   async setSampleFile() {
     const pdf = await this.pdfService.createSample();
+    this.filename = "sample";
     await this.addPdf(pdf);
   }
 
   async addPdfFromFile(file: File, idx?: number) {
     const pdf = await this.pdfService.fromPdfFile(file);
+    if (this.pages.length === 0) {
+      this.filename = file.name.split('.').slice(0, -1).join('.');
+    }
     return await this.addPdf(pdf, idx);
   }
 
   async addImageFromFile(file: File, idx?: number) {
     const pdf = await this.pdfService.fromImageFile(file);
+    if (this.pages.length === 0) {
+      this.filename = file.name.split('.').slice(0, -1).join('.');
+    }
     await this.addPdf(pdf, idx);
   }
 
@@ -121,7 +131,7 @@ export class EditorService {
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = "result.pdf";
+    link.download = `${this.filename}.pdf`;
     link.click();
   }
 
