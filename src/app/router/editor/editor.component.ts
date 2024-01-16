@@ -97,7 +97,6 @@ export class EditorComponent implements OnInit {
     const newAngle = this.editorService.rotatePage(currentPageIdx, clockWise);
     const nativeElement = this.fullpageViewComponents.get(currentPageIdx)?.elementRef.nativeElement as HTMLElement;
     nativeElement.style.rotate = `${newAngle}deg`;
-    console.log(nativeElement);
   }
 
   deleteCurrentPage() {

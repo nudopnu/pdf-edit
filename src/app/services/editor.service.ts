@@ -59,7 +59,7 @@ export class EditorService {
   }
 
   deletePage(idx: number) {
-    if (this.pages.length !== 0) return;
+    if (this.pages.length === 0) return;
     this.pages = [...this.pages.filter((_, i) => i !== idx)];
     if (this.currentPageIdx >= this.pages.length) {
       this.currentPageIdx -= 1;
