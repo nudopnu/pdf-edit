@@ -30,6 +30,7 @@ export class EditorComponent implements OnInit {
     const { key } = event;
     switch (key) {
       case 'j':
+      case 'ArrowDown':
         if (event.altKey) {
           this.moveCurrentPageDown();
         } else {
@@ -38,6 +39,7 @@ export class EditorComponent implements OnInit {
         }
         break;
       case 'k':
+      case 'ArrowUp':
         if (event.altKey) {
           this.moveCurrentPageUp();
         } else {
