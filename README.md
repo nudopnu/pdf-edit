@@ -13,13 +13,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Keyboard shortcuts
 
-| Key binding                                                    | Effect                                              |
-|----------------------------------------------------------------|-----------------------------------------------------|
-| <kbd>k</kbd>, <kbd>j</kbd>                                     | Select next or previous page                        |
-| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>j</kbd> | Move selected page up or down                       |
-| <kbd>d</kbd>                                                   | Delete selected page                                |
-| <kbd>r</kbd>, <kbd>l</kbd>                                     | Rotate selected page clock-wise, counter clock-wise |
-| <kbd>s</kbd>                                                   | Save pdf                                            |
+| Key binding                                                                                                                           | Effect                                              |
+|---------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| <kbd>k</kbd>, <kbd>j</kbd> or <kbd>↑</kbd>, <kbd>↓</kbd>                                                                              | Select next or previous page                        |
+| <kbd>Ctrl</kbd> + <kbd>k</kbd>, <kbd>Ctrl</kbd> + <kbd>j</kbd> or <br> <kbd>Ctrl</kbd> + <kbd>↑</kbd>, <kbd>Ctrl</kbd> + <kbd>↓</kbd> | Move selected page up or down                       |
+| <kbd>d</kbd>                                                                                                                          | Delete selected page                                |
+| <kbd>r</kbd>, <kbd>l</kbd>                                                                                                            | Rotate selected page clock-wise, counter clock-wise |
+| <kbd>s</kbd>                                                                                                                          | Save pdf                                            |
+| <kbd>o</kbd>                                                                                                                          | Open or append file                                 |
 
 ## Development server
 
