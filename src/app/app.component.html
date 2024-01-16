@@ -6,11 +6,14 @@
             'pdf-edit'}}</h3>
         } @else {
         <nz-input-group nzSuffix=".pdf" nzSize="small" style="margin: 1px 0;">
-            <input nz-input  placeholder="filename" [(ngModel)]="editorService.filename"
+            <input nz-input placeholder="filename" [(ngModel)]="editorService.filename"
                 (submit)="onToggleTitleEditingmode()" pdfSubmitOnEnter onClick="this.select();"
                 (blur)="onToggleTitleEditingmode()" autofocus />
         </nz-input-group>
         }
+        <button nz-button nzType="default" nzShape="circle" nzSize="small" (click)="onClickHelp()">
+            <span nz-icon nzType="question" nzTheme="outline"></span>
+        </button>
         <button nz-button nzType="default" nzShape="circle" (click)="onToggleDarkmode()" nzSize="small">
             <span nz-icon nzType="bg-colors" nzTheme="outline"></span>
         </button>

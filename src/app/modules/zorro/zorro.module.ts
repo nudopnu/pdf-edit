@@ -7,7 +7,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { UserOutline, BgColorsOutline, PlusOutline, RotateRightOutline, SwapOutline, FileSyncOutline, SyncOutline, DeleteOutline, DownOutline, CaretUpOutline, DownloadOutline, InboxOutline } from '@ant-design/icons-angular/icons';
+import { UserOutline, BgColorsOutline, PlusOutline, RotateRightOutline, SwapOutline, FileSyncOutline, SyncOutline, DeleteOutline, DownOutline, CaretUpOutline, DownloadOutline, InboxOutline, QuestionOutline } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
     UserOutline,
@@ -22,6 +22,7 @@ const icons: IconDefinition[] = [
     CaretUpOutline,
     DownloadOutline,
     InboxOutline,
+    QuestionOutline,
 ];
 
 @NgModule({

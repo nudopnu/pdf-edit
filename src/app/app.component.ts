@@ -9,6 +9,7 @@ import { ThemeService } from './services/theme.service';
 })
 export class AppComponent {
 
+  GITHUB_URL = 'https://github.com/nudopnu/pdf-edit';
 
   constructor(
     private themeService: ThemeService,
@@ -22,6 +23,10 @@ export class AppComponent {
   onToggleTitleEditingmode() {
     this.editorService.isTitleEditing = !this.editorService.isTitleEditing;
     console.log(this.editorService.isTitleEditing);
+  }
+
+  onClickHelp() {
+    window.open(this.GITHUB_URL, '_blank');
   }
 
 }
