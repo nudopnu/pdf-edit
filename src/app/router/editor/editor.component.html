@@ -5,7 +5,7 @@
             @for (page of editorService.pages; track page) {
             <div class="preview" [attr.data-id]="$index" (blur)="onBlur()">
                 <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"></pdf-pageview>
-                <div style="text-align: center;">{{$index + 1}}</div>
+                <div class="page-number">{{$index + 1}}</div>
             </div>
             }
         </div>

@@ -59,7 +59,8 @@ aside#preview {
     flex: 1;
 }
 
-.selected, .chosen {
+.selected,
+.chosen {
     background-color: #2598e5;
 }
 
@@ -77,6 +78,14 @@ aside#preview {
     padding: 50px;
     display: block;
     height: 100%;
+}
+
+div.page-number {
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 ::ng-deep .fullpage canvas {
