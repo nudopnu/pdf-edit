@@ -80,12 +80,15 @@ aside#preview {
     height: 100%;
 }
 
-div.page-number {
-    text-align: center;
+div.preview {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+div.page-number {
+    text-align: center;
 }
 
 ::ng-deep .fullpage canvas {
