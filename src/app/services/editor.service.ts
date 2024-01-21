@@ -16,18 +16,6 @@ export class EditorService {
 
   constructor(private pdfService: PdfService) { }
 
-  selectPreviousPage() {
-    if (this.currentPageIdx > 0) {
-      this.selectPage(this.currentPageIdx - 1);
-    }
-  }
-
-  selectNextPage() {
-    if (this.currentPageIdx < this.pages.length - 1) {
-      this.selectPage(this.currentPageIdx + 1);
-    }
-  }
-
   selectPage(idx: number) {
     this.currentPageIdx = idx;
   }

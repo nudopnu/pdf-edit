@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PDFDocument, StandardFonts, arrayAsString, rgb } from 'pdf-lib';
+import { PDFDocument, StandardFonts, arrayAsString, degrees, grayscale, rgb } from 'pdf-lib';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 
 declare const pdfjsLib: any;
@@ -23,8 +23,17 @@ export class PdfService {
       const pageNr = i;
       const page = libDoc.addPage();
       const { width, height } = page.getSize();
-      const fontSize = 30;
-      page.drawText(`Page ${pageNr}`, {
+      const fontSize = 80;
+      page.drawRectangle({
+        x: 325,
+        y: 75,
+        width: 250,
+        height: 75,
+        borderWidth: 5,
+        rotate: degrees(i * 45),
+        color: rgb(i * 0.75 % 1, 0.2, 0.2),
+      });
+      page.drawText(`Page ${pageNr + 1}`, {
         x: 50,
         y: height - 4 * fontSize,
         size: fontSize,

@@ -8,10 +8,12 @@ main {
     display: flex;
     width: 100%;
     height: 100%;
+    background-color: #0001;
 }
 
 #workarea {
     position: relative;
+    padding: 0 10px;
     max-height: 100%;
     overflow-y: scroll;
     flex: 1;
@@ -57,7 +59,7 @@ aside#preview {
     flex: 1;
 }
 
-.selected {
+.selected, .chosen {
     background-color: #2598e5;
 }
 
