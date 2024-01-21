@@ -1,7 +1,7 @@
 <header>
     <nav>
         @if (!editorService.isTitleEditing) {
-        <h3 (dblclick)="onToggleTitleEditingmode()" touchable (onDblTap)="onToggleTitleEditingmode()">
+        <h3 (click)="onToggleTitleEditingmode()" touchable (onDblTap)="onToggleTitleEditingmode()">
             {{editorService.filename ? editorService.filename + '.pdf' :
             'pdf-edit'}}</h3>
         } @else {

@@ -162,9 +162,9 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.editorService.setSampleFile();
-    this.moveToPage(0);
-    this.initSortable();
+    // await this.editorService.setSampleFile();
+    // this.moveToPage(0);
+    // this.initSortable();
   }
 
   onBlur() {
@@ -201,7 +201,6 @@ export class EditorComponent implements OnInit {
         const pages = [] as PDFPageProxy[];
         idcs.forEach(idx => pages.push(this.editorService.pages[idx]));
         this.editorService.pages = [...pages];
-        console.log(evt);
         evt.items.forEach((item) => {
           Sortable.utils.deselect(item);
         });
