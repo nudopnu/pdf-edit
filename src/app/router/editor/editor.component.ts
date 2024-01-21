@@ -180,7 +180,7 @@ export class EditorComponent implements OnInit {
       selectedClass: 'selected',
       chosenClass: 'chosen',
       delayOnTouchOnly: true,
-      // delay: 300,
+      delay: 300,
       animation: 199,
       onSelect: (evt) => {
         this.chosenPages = evt.items;
