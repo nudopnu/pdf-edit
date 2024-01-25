@@ -7,6 +7,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { UserOutline, BgColorsOutline, PlusOutline, RotateRightOutline, SwapOutline, FileSyncOutline, SyncOutline, DeleteOutline, DownOutline, CaretUpOutline, DownloadOutline, InboxOutline, QuestionOutline } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -37,6 +38,7 @@ const icons: IconDefinition[] = [
         NzSpinModule,
         NzDividerModule,
         NzInputModule,
+        NzCheckboxModule,
     ]
 })
 export class ZorroModule { }

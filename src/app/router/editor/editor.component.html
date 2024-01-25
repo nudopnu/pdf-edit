@@ -4,8 +4,12 @@
         <div #previewList id="preview-placeholder">
             @for (page of editorService.pages; track page) {
             <div class="preview" [attr.data-id]="$index" (blur)="onBlur()">
-                <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"></pdf-pageview>
-                <div class="page-number">{{$index + 1}}</div>
+                <div class="outer" touchable (onLongTap)="enterSelectMode($index)">
+                    <div class="inner">
+                        <pdf-pageview [page]="page" [scale]="0.1" class="page-preview"></pdf-pageview>
+                    </div>
+                    <div class="page-number">{{$index + 1}}</div>
+                </div>
             </div>
             }
         </div>

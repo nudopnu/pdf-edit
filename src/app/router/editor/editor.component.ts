@@ -17,6 +17,7 @@ export class EditorComponent implements OnInit {
 
   supportedFiles = ALLOWED_FILE_TYPES.join(',');
   isLoading = false;
+  isSelecting = false;
   chosenPages = [] as HTMLElement[];
   chosenPageIndices = [] as number[];
 
@@ -73,6 +74,13 @@ export class EditorComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  enterSelectMode(index: number) {
+    if (this.isSelecting) return;
+    this.isSelecting = true;
+    this.sortable.options.disabled = false;
+    this.selectPage(index);
   }
 
   async onFilesReceived(files: Array<File>) {
@@ -162,9 +170,9 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    // await this.editorService.setSampleFile();
-    // this.moveToPage(0);
-    // this.initSortable();
+    await this.editorService.setSampleFile();
+    this.moveToPage(0);
+    this.initSortable();
   }
 
   onBlur() {
@@ -180,7 +188,7 @@ export class EditorComponent implements OnInit {
       selectedClass: 'selected',
       chosenClass: 'chosen',
       delayOnTouchOnly: true,
-      delay: 300,
+      delay: 100,
       animation: 199,
       onSelect: (evt) => {
         this.chosenPages = evt.items;
@@ -192,7 +200,13 @@ export class EditorComponent implements OnInit {
       onDeselect: (evt) => {
         this.chosenPages = evt.items;
         this.chosenPageIndices = evt.newIndicies.map((o) => o.index);
-        if (this.chosenPageIndices.length === 0) return;
+        if (this.chosenPageIndices.length === 0) {
+          this.isSelecting = false;
+          this.sortable.options.disabled = true;
+          this.chosenPageIndices = [];
+          this.chosenPages = [];
+          return;
+        };
         this.editorService.currentPageIdx = this.chosenPageIndices.at(-1)!;
         this.moveToPage(this.editorService.currentPageIdx);
       },
@@ -204,8 +218,13 @@ export class EditorComponent implements OnInit {
         evt.items.forEach((item) => {
           Sortable.utils.deselect(item);
         });
+        this.isSelecting = false;
+        this.sortable.options.disabled = true;
+        this.chosenPageIndices = [];
+        this.chosenPages = [];
         this.cdr.detectChanges();
       }
     });
+    this.sortable.options.disabled = true;
   }
 }

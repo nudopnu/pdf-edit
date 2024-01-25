@@ -94,3 +94,8 @@ div.page-number {
 ::ng-deep .fullpage canvas {
     box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2), 0 0px 10px 0 rgba(0, 0, 0, 0.19) !important;
 }
+
+.inner {
+    display: flex;
+    align-items: center;
+}
