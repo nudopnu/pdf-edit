@@ -170,9 +170,9 @@ export class EditorComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.editorService.setSampleFile();
-    this.moveToPage(0);
-    this.initSortable();
+    // await this.editorService.setSampleFile();
+    // this.moveToPage(0);
+    // this.initSortable();
   }
 
   onBlur() {
